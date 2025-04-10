@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuestionario Parasitología</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+    .fixed-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      padding: 10px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    #puntaje {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .progress-container {
+      background: #ccc;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #progreso {
+      height: 100%;
+      width: 0%;
+      background: #4caf50;
+    }
+    .content {
+      padding: 100px 20px 20px;
+    }
+    .question-container {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #eee;
+      cursor: pointer;
+    }
+    button:hover { background: #ddd; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="fixed-bar">
+    <div id="puntaje">Puntaje: 0</div>
+    <div class="progress-container">
+      <div id="progreso"></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>Cuestionario de Parasitología</h1>
+    <div>
+      <button onclick="mostrarSeccion('ascariasis')">Ascariasis</button>
+      <button onclick="mostrarSeccion('toxoplasmosis')">Toxoplasmosis</button>
+      <button onclick="mostrarSeccion('leishmaniasis')">Leishmaniasis</button>
+      <button onclick="mostrarSeccion('paludismo')">Paludismo</button>
+      <button onclick="mostrarSeccion('necator')">Necator</button>
+      <button onclick="mostrarSeccion('ancylostoma')">Ancylostoma</button>
+      <button onclick="mostrarSeccion('tenias')">Tenias</button>
+      <button onclick="mostrarSeccion('filariasis')">Filariasis</button>
+      <button onclick="mostrarSeccion('onchocerca')">Onchocerca</button>
+
+    </div>
+    <div id="ascariasis" class="quiz-section"></div>
+    <div id="toxoplasmosis" class="quiz-section" style="display:none;"></div>
+    <div id="leishmaniasis" class="quiz-section" style="display:none;"></div>
+    <div id="paludismo" class="quiz-section" style="display:none;"></div>
+    <div id="necator" class="quiz-section" style="display:none;"></div>
+    <div id="ancylostoma" class="quiz-section" style="display:none;"></div>
+    <div id="tenias" class="quiz-section" style="display:none;"></div>
+    <div id="filariasis" class="quiz-section" style="display:none;"></div>
+    <div id="onchocerca" class="quiz-section" style="display:none;"></div>
+
+  </div>
+
+  <script>
+    const preguntasAscariasis = [
+    { pregunta: "¿Cuál es el agente etiológico de la ascariasis?", opciones: ["Toxocara canis", "Ascaris lumbricoides", "Trichuris trichiura", "Enterobius vermicularis"], respuesta: 1 },
+      { pregunta: "¿Dónde se localizan principalmente los adultos de Ascaris lumbricoides?", opciones: ["Colon", "Intestino delgado", "Estómago", "Vía biliar"], respuesta: 1 },
+      { pregunta: "¿Qué estructura se encuentra en el extremo anterior de Ascaris lumbricoides?", opciones: ["Espículas", "Estilete", "Tres labios prominentes", "Cilios"], respuesta: 2 },
+      { pregunta: "¿Cuál es la longitud aproximada de la hembra adulta de Ascaris?", opciones: ["5-10 cm", "10-15 cm", "20-30 cm", "35-50 cm"], respuesta: 2 },
+      { pregunta: "¿Cómo se diferencia el macho adulto de la hembra?", opciones: ["Tiene boca más grande", "Posee extremo posterior curvado y espículas", "Tiene más coloración", "Es más largo"], respuesta: 1 },
+      { pregunta: "¿Cómo se adquiere la infección por Ascaris?", opciones: ["Por picadura de insecto", "Por ingestión de huevos embrionados", "Por inhalación de larvas", "Por contacto con la piel"], respuesta: 1 },
+      { pregunta: "¿Cuál es el tiempo aproximado desde la ingestión del huevo hasta la puesta de huevos por la hembra adulta?", opciones: ["1 semana", "2 meses", "5 días", "6 meses"], respuesta: 1 },
+      { pregunta: "¿Qué lesión pulmonar típica produce la migración larvaria?", opciones: ["Neumonía por aspiración", "Síndrome de Loeffler", "Bronquiectasias", "Fibrosis pulmonar"], respuesta: 1 },
+      { pregunta: "¿Qué manifestación clínica es característica de la fase intestinal?", opciones: ["Tos seca", "Convulsiones", "Dolor periumbilical", "Hemorragia nasal"], respuesta: 2 },
+      { pregunta: "¿Cuál es la complicación más grave causada por la migración de adultos?", opciones: ["Hepatomegalia", "Obstrucción intestinal", "Cistitis", "Dermatitis"], respuesta: 1 },
+      { pregunta: "¿Qué tipo de huevo indica la presencia de hembras no fecundadas?", opciones: ["Huevos con larvas móviles", "Huevos infértiles alargados e irregulares", "Huevos con membrana rugosa", "Huevos sin membranas"], respuesta: 1 },
+      { pregunta: "¿Qué órgano es afectado en migraciones erráticas?", opciones: ["Corazón", "Vías biliares", "Médula espinal", "Páncreas"], respuesta: 1 },
+      { pregunta: "¿Qué medida se utiliza para estimar la intensidad del parasitismo?", opciones: ["Hemograma", "Nivel de eosinófilos", "Huevos por gramo de heces (hpg)", "Radiografía"], respuesta: 2 },
+      { pregunta: "¿Qué valor de hpg indica una infección intensa?", opciones: ["1.000 hpg", "10.000 hpg", "Más de 50.000 hpg", "2.000 hpg"], respuesta: 2 },
+      { pregunta: "¿Qué antihelmíntico está contraindicado junto con pirantel?", opciones: ["Albendazol", "Piperazina", "Mebendazol", "Flubendazol"], respuesta: 1 },
+      { pregunta: "¿Qué medicamento se recomienda especialmente si hay obstrucción intestinal?", opciones: ["Mebendazol", "Piperazina", "Albendazol", "Levamisol"], respuesta: 1 },
+      { pregunta: "¿Cuál es la principal vía de diagnóstico?", opciones: ["Ecografía hepática", "Radiografía abdominal", "Examen coproparasitoscópico", "Serología"], respuesta: 2 },
+      { pregunta: "¿Qué fenómeno se produce por paso de larvas al cerebro?", opciones: ["Esquizofrenia", "Granulomas", "Meningitis", "Hematoma subdural"], respuesta: 1 },
+      { pregunta: "¿Qué técnica radiológica puede mostrar defectos lineales por parásitos?", opciones: ["Tomografía", "Radiografía con bario", "Resonancia magnética", "Endoscopia"], respuesta: 1 },
+      { pregunta: "¿Qué característica favorece la alta prevalencia de ascariasis?", opciones: ["Resistencia del parásito al calor", "Durabilidad de los huevos en el ambiente", "Ausencia de síntomas", "Reproducción en el intestino humano"], respuesta: 1 },
+      { pregunta: "¿Qué factor desencadena migraciones erráticas?", opciones: ["Hipertermia", "Fiebre y uso de antihelmínticos", "Hipoglucemia", "Edad avanzada"], respuesta: 1 },
+      { pregunta: "¿Qué país reportó mejoras cognitivas tras desparasitación escolar?", opciones: ["Guatemala", "Indonesia", "Brasil", "Colombia"], respuesta: 1 },
+      { pregunta: "¿Qué fase del ciclo de vida ocurre primero tras la ingestión?", opciones: ["Migración hepática", "Penetración de larvas en la pared intestinal", "Deposición de huevos", "Formación de nudos"], respuesta: 1 },
+      { pregunta: "¿Qué estructura permite que el parásito no sea arrastrado por el peristaltismo?", opciones: ["Espículas", "Musculatura subcuticular", "Cilios", "Ganchos de fijación"], respuesta: 1 },
+      { pregunta: "¿Qué manifestación clínica ocurre por invasión del colédoco?", opciones: ["Apendicitis", "Colangitis", "Hepatoma", "Ileo"], respuesta: 1 },
+      { pregunta: "¿Cuál es el tratamiento de elección según OMS en campañas masivas?", opciones: ["Piperazina", "Albendazol dosis única de 400 mg", "Levamisol cada semana", "Flubendazol por 10 días"], respuesta: 1 },
+      { pregunta: "¿Qué grupo es el objetivo principal en quimioprofilaxis preventiva?", opciones: ["Embarazadas", "Adultos mayores", "Niños escolares en zonas endémicas", "Trabajadores rurales"], respuesta: 2 },
+      { pregunta: "¿Cuál es la principal fuente de infección?", opciones: ["Aire", "Contacto piel-piel", "Alimentos o agua contaminada con huevos", "Leche materna"], respuesta: 2 },
+      { pregunta: "¿Qué componente interno predomina en la cavidad del Ascaris adulto?", opciones: ["Sistema nervioso", "Sistema excretor", "Aparato genital", "Sistema inmunológico"], respuesta: 2 },
+      { pregunta: "¿Cuál es una complicación rara pero posible en SNC?", opciones: ["Trombosis", "Convulsiones por granulomas larvarios", "Migraña", "Neuropatía periférica"], respuesta: 1 }
+    ];
+
+    const preguntasToxoplasmosis = [
+    { pregunta: "¿Cuál es el agente etiológico de la toxoplasmosis?", opciones: ["Toxocara canis", "Giardia lamblia", "Toxoplasma gondii", "Entamoeba histolytica"], respuesta: 2 },
+  { pregunta: "¿A qué filo pertenece Toxoplasma gondii?", opciones: ["Metamonada", "Apicomplexa", "Euglenozoa", "Ciliophora"], respuesta: 1 },
+  { pregunta: "¿Cuál es la forma morfológica de reproducción rápida de T. gondii?", opciones: ["Esporozoíto", "Bradizoíto", "Trofozoíto", "Taquizoíto"], respuesta: 3 },
+  { pregunta: "¿Cuál es la forma de T. gondii presente en los quistes tisulares?", opciones: ["Taquizoíto", "Esporozoíto", "Bradizoíto", "Amastigote"], respuesta: 2 },
+  { pregunta: "¿Qué animal es el huésped definitivo de Toxoplasma gondii?", opciones: ["Perro", "Gato", "Humano", "Roedor"], respuesta: 1 },
+  { pregunta: "¿Qué forma de T. gondii se encuentra en las heces de los gatos?", opciones: ["Trofozoíto", "Ooquiste", "Quiste", "Esporozoíto"], respuesta: 1 },
+  { pregunta: "¿Cuántos esporozoítos contiene cada ooquiste maduro?", opciones: ["2", "4", "8", "16"], respuesta: 2 },
+  { pregunta: "¿Qué estructura invade primero el parásito tras la ingestión del ooquiste?", opciones: ["Estómago", "Células epiteliales intestinales", "Neuronas", "Hígado"], respuesta: 1 },
+  { pregunta: "¿Cuál de las siguientes NO es una vía de transmisión de T. gondii?", opciones: ["Carne mal cocida", "Transfusión sanguínea", "Leche pasteurizada", "Transmisión placentaria"], respuesta: 2 },
+  { pregunta: "¿Qué tipo de reproducción ocurre en el intestino del gato?", opciones: ["Solo asexual", "Solo sexual", "Sexual y asexual", "Ninguna"], respuesta: 2 },
+  { pregunta: "¿Qué forma de reproducción presenta el taquizoíto?", opciones: ["Bipartición", "Esquizogonia", "Endodiogenia", "Gemación"], respuesta: 2 },
+  { pregunta: "¿Dónde se alojan los bradizoítos en infecciones crónicas?", opciones: ["Sangre", "Intestino", "Tejidos", "Líquido cefalorraquídeo"], respuesta: 2 },
+  { pregunta: "¿Qué células del sistema inmune transportan al parásito?", opciones: ["Eritrocitos", "Linfocitos", "Macrófagos", "Plaquetas"], respuesta: 2 },
+  { pregunta: "¿Qué daño tisular causa principalmente el taquizoíto?", opciones: ["Hipoxia", "Degeneración grasa", "Necrosis celular", "Esclerosis"], respuesta: 2 },
+  { pregunta: "¿Qué manifestación clínica es más frecuente en personas inmunocompetentes?", opciones: ["Neumonía", "Linfadenopatía cervical", "Convulsiones", "Hepatomegalia"], respuesta: 1 },
+  { pregunta: "¿Qué porcentaje de infecciones en inmunocompetentes es asintomático?", opciones: ["20%", "50%", "80-90%", "100%"], respuesta: 2 },
+  { pregunta: "¿Cuál es la forma clínica más común de toxoplasmosis adquirida?", opciones: ["Congénita", "Ganglionar", "Encefalitis", "Hepática"], respuesta: 1 },
+  { pregunta: "¿Cuál es la lesión ocular característica de la toxoplasmosis?", opciones: ["Glaucoma", "Retinocoroiditis", "Catarata", "Uveítis anterior"], respuesta: 1 },
+  { pregunta: "¿En qué trimestre del embarazo hay mayor daño fetal si hay infección?", opciones: ["Primero", "Segundo", "Tercero", "No hay diferencia"], respuesta: 0 },
+  { pregunta: "¿Qué manifestación se presenta con mayor frecuencia en el feto infectado?", opciones: ["Meningitis", "Hidrocefalia", "Espina bífida", "Atresia intestinal"], respuesta: 1 },
+  { pregunta: "¿Qué hallazgo es típico en radiografías de casos congénitos?", opciones: ["Atelectasias", "Calcificaciones cerebrales", "Quistes pulmonares", "Estenosis pilórica"], respuesta: 1 },
+  { pregunta: "¿Qué órgano se afecta con mayor frecuencia en pacientes con SIDA?", opciones: ["Pulmón", "Hígado", "Cerebro", "Páncreas"], respuesta: 2 },
+  { pregunta: "¿Cuál es la prueba de diagnóstico serológico clásico?", opciones: ["ELISA", "PCR", "Sabin y Feldman", "Western Blot"], respuesta: 2 },
+  { pregunta: "¿Cuál es el primer anticuerpo que aparece tras la infección?", opciones: ["IgG", "IgE", "IgA", "IgM"], respuesta: 3 },
+  { pregunta: "¿Qué indica la presencia de IgG de alta avidez?", opciones: ["Infección reciente", "Infección crónica", "Inmunidad deficiente", "Ausencia de infección"], respuesta: 1 },
+  { pregunta: "¿Cuál es el principal método directo para detectar T. gondii en muestras clínicas?", opciones: ["Tinción ácido-alcohol resistente", "Examen directo en fresco", "PCR", "Hemocultivo"], respuesta: 2 },
+  { pregunta: "¿Qué técnica permite observar taquizoítos vivos fluorescentes?", opciones: ["ELISA", "Inmunofluorescencia indirecta", "Hemaglutinación", "Western blot"], respuesta: 1 },
+  { pregunta: "¿Cuál es el tratamiento de elección para toxoplasmosis en adultos inmunocompetentes sintomáticos?", opciones: ["Albendazol", "Penicilina", "Pirimetamina + sulfadiazina", "Metronidazol"], respuesta: 2 },
+  { pregunta: "¿Qué fármaco se administra junto a pirimetamina para evitar toxicidad hematológica?", opciones: ["Ácido valproico", "Vitamina B12", "Ácido folínico", "Corticoides"], respuesta: 2 },
+  { pregunta: "¿Qué tipo de inmunidad es más importante en el control del parásito?", opciones: ["Humoral", "Celular", "Innata", "Pasiva"], respuesta: 1 },
+  { pregunta: "¿Cuáles de las siguientes citocinas activan macrófagos para eliminar T. gondii?", opciones: ["IL-4", "Interferón gamma", "IL-10", "TNF-alfa"], respuesta: 1 },
+  { pregunta: "¿Qué proteína específica se usa en pruebas moleculares para T. gondii?", opciones: ["Hemaglutinina", "SAG1", "gp120", "p24"], respuesta: 1 },
+  { pregunta: "¿Qué anticuerpo es útil como marcador de infección reciente en neonatos?", opciones: ["IgG", "IgA", "IgD", "IgE"], respuesta: 1 },
+  { pregunta: "¿Cuál es el principal marcador serológico de una infección activa reciente?", opciones: ["IgG persistente", "IgM positiva", "IgE negativa", "IgD elevada"], respuesta: 1 },
+  { pregunta: "¿Qué genotipo de T. gondii es el más común en humanos en América?", opciones: ["Genotipo IV", "Genotipo I", "Genotipo II", "Genotipo V"], respuesta: 2 },
+  { pregunta: "¿Cuál es la complicación ocular más común en la toxoplasmosis crónica?", opciones: ["Glaucoma", "Retinocoroiditis", "Queratitis", "Neuritis óptica"], respuesta: 1 },
+  { pregunta: "¿Cuál es la mejor muestra para PCR en sospecha de toxoplasmosis ocular?", opciones: ["Sangre", "LCR", "Humor acuoso", "Tejido muscular"], respuesta: 2 },
+  { pregunta: "¿En qué estructura intracelular se multiplica T. gondii?", opciones: ["Núcleo", "Vacuola parasitófora", "Aparato de Golgi", "Lisosoma"], respuesta: 1 },
+  { pregunta: "¿Cuál es el método más eficaz para confirmar la reactivación en VIH?", opciones: ["Serología IgG", "Western blot", "TAC cerebral", "Coprocultivo"], respuesta: 2 },
+  { pregunta: "¿Qué hallazgo clínico sugiere encefalitis toxoplásmica en pacientes con SIDA?", opciones: ["Glositis", "Hemianopsia", "Fiebre con cefalea y focalización neurológica", "Disfagia"], respuesta: 2 },
+  { pregunta: "¿Qué tipo de quiste contiene esporozoítos?", opciones: ["Quiste tisular", "Quiste hepático", "Ooquiste", "Pseudquiste"], respuesta: 2 },
+  { pregunta: "¿Cuál es la técnica diagnóstica útil para diferenciar infección aguda de crónica?", opciones: ["Tinción de Ziehl-Neelsen", "Prueba de avidez de IgG", "Coloración de Wright", "Inmunoelectroforesis"], respuesta: 1 },
+  { pregunta: "¿Qué componente inmunológico destruye los taquizoítos extracelulares?", opciones: ["Hemoglobina", "Anticuerpos IgG", "Complemento", "Interferón alfa"], respuesta: 1 },
+  { pregunta: "¿Qué célula del sistema inmune destruye las células infectadas?", opciones: ["Linfocitos T CD4", "Células dendríticas", "Células NK", "Células plasmáticas"], respuesta: 2 },
+  { pregunta: "¿Cuál es el tratamiento de elección en embarazadas con infección reciente sin transmisión confirmada al feto?", opciones: ["Pirimetamina", "Sulfadiazina", "Espiramicina", "Penicilina"], respuesta: 2 },
+  { pregunta: "¿Qué fase del parásito está presente en la carne cruda?", opciones: ["Taquizoíto", "Esporozoíto", "Quiste tisular con bradizoítos", "Ooquiste"], respuesta: 2 },
+  { pregunta: "¿Qué condición inmunológica favorece la reactivación del parásito?", opciones: ["Hipertiroidismo", "Inmunosupresión", "Hiperglucemia", "Alergias"], respuesta: 1 },
+  { pregunta: "¿Qué característica histológica es común en la retina infectada?", opciones: ["Fibrina", "Calcificación difusa", "Gránulos pigmentarios dispersos", "Acantosis"], respuesta: 2 },
+  { pregunta: "¿En qué trimestre del embarazo hay más riesgo de transmisión al feto?", opciones: ["Primero", "Segundo", "Tercero", "No hay riesgo"], respuesta: 2 },
+  { pregunta: "¿Qué hallazgo es típico en el LCR de un paciente con encefalitis toxoplásmica?", opciones: ["Leucocitosis intensa", "Glucosa elevada", "Proteínas elevadas", "Parásitos móviles"], respuesta: 2 }
+    ];
+    const preguntasLeishmaniasis = [
+
+    ];
+    const preguntasPaludismo = [
+
+    ];
+    const preguntasNecator = [
+    { pregunta: "¿Qué género presenta placas cortantes en su cápsula bucal?", opciones: ["Ancylostoma", "Trichuris", "Necator", "Strongyloides"], respuesta: 2 },
+  { pregunta: "¿Cuál es el mecanismo principal de infección por N. americanus?", opciones: ["Ingestión de quistes", "Picadura de insecto", "Penetración cutánea", "Transmisión vertical"], respuesta: 2 },
+  { pregunta: "¿Qué forma larvaria sale del huevo en la tierra?", opciones: ["Larva filariforme", "Taquizoíto", "Larva rhabditiforme", "Bradizoíto"], respuesta: 2 },
+  { pregunta: "¿Qué tropismos poseen las larvas para facilitar su contacto con el huésped?", opciones: ["Fototropismo y quimiotropismo", "Termotropismo y tigmotropismo", "Magnetotropismo y osmotropismo", "Aerotropismo y heliotropismo"], respuesta: 1 },
+  { pregunta: "¿Qué parásito tiene mayor vida media en el huésped?", opciones: ["Ancylostoma duodenale", "Necator americanus", "Strongyloides stercoralis", "Ascaris lumbricoides"], respuesta: 1 }
+    ];
+    const preguntasAncylostoma = [
+    { pregunta: "¿Cuál es el nombre común de la uncinariasis?", opciones: ["Esquistosomiasis", "Anemia mediterránea", "Anemia tropical", "Tripanosomiasis"], respuesta: 2 },
+  { pregunta: "¿Qué género presenta los dientes en la cápsula bucal?", opciones: ["Necator", "Ascaris", "Enterobius", "Ancylostoma"], respuesta: 3 },
+  { pregunta: "¿Dónde viven los adultos de estos parásitos en el cuerpo humano?", opciones: ["Colon", "Estómago", "Intestino delgado", "Pulmones"], respuesta: 2 },
+  { pregunta: "¿Cuál es la forma larvaria infectante de estos nemátodos?", opciones: ["Esporozoíto", "Larva rhabditiforme", "Larva filariforme", "Trofozoíto"], respuesta: 2 },
+  { pregunta: "¿Qué vía adicional de infección presenta A. duodenale?", opciones: ["Transmisión sexual", "Transfusión sanguínea", "Inhalación", "Ingestión oral de larvas"], respuesta: 3 },
+  { pregunta: "¿Cuál es la longitud aproximada de las hembras adultas de estos parásitos?", opciones: ["1 mm", "5 mm", "10 mm", "20 mm"], respuesta: 2 },
+  { pregunta: "¿Qué estructura permite al macho adherirse a la hembra durante la cópula?", opciones: ["Cápsula bucal", "Espícula", "Bursa copulatriz", "Clásper"], respuesta: 2 },
+  { pregunta: "¿Qué característica diferencia morfológicamente a A. duodenale de N. americanus?", opciones: ["A. duodenale tiene cápsula bucal con dientes", "N. americanus tiene cápsula con dientes", "A. duodenale tiene cutícula rugosa", "N. americanus no tiene esófago"], respuesta: 0 },
+  { pregunta: "¿Qué forma larvaria no se alimenta y busca infectar al huésped?", opciones: ["Larva rhabditiforme", "Larva filariforme", "Ooquiste", "Cisticerco"], respuesta: 1 },
+  { pregunta: "¿Qué condición favorece la supervivencia de las larvas en el suelo?", opciones: ["Luz intensa", "Temperatura baja 5°C", "Sombra y humedad moderada", "Suelo seco y arenoso"], respuesta: 2 },
+  { pregunta: "¿Cuál es el período de prepatente promedio?", opciones: ["2 semanas", "4 semanas", "6 a 8 semanas", "12 semanas"], respuesta: 2 },
+  { pregunta: "¿Qué tipo de anemia causan estos parásitos?", opciones: ["Normocítica normocrómica", "Megaloblástica", "Microcítica hipocrómica", "Hemolítica"], respuesta: 2 },
+  { pregunta: "¿Cuál es el principal daño producido por estas especies?", opciones: ["Hepatomegalia", "Obstrucción intestinal", "Pérdida de sangre", "Peritonitis"], respuesta: 2 },
+  { pregunta: "¿Qué cantidad diaria de sangre puede perderse por A. duodenale?", opciones: ["0,01 ml", "0,04 ml", "0,20 ml", "1,0 ml"], respuesta: 2 },
+  { pregunta: "¿Cuál es una manifestación neurológica observada en casos severos?", opciones: ["Convulsiones", "“Tuntún” (cefalea pulsátil)", "Hemiplejía", "Letargia comatosa"], respuesta: 1 },
+  { pregunta: "¿Qué valor de hpg se considera nivel de parasitismo?", opciones: ["Menos de 500", "Menos de 2.000", "Menos de 5.000", "Menos de 10.000"], respuesta: 1 },
+  { pregunta: "¿Qué resultado se obtiene al dividir hpg por 80 según el PDF?", opciones: ["Cantidad de larvas en músculo", "Grado de eosinofilia", "Número aproximado de parásitos adultos", "Tiempo de incubación"], respuesta: 2 },
+  { pregunta: "¿Cuál es la técnica más usada para recuento de huevos?", opciones: ["Graham", "Kato-Katz", "Baermann", "ELISA"], respuesta: 1 },
+  { pregunta: "¿Qué prueba es más sensata para concentrar huevos?", opciones: ["Directo en fresco", "Formol-éter", "Flotac", "Coloración Ziehl-Neelsen"], respuesta: 2 },
+  { pregunta: "¿Qué células predominan en la respuesta comunitaria?", opciones: ["Basófilos", "Eosinófilos", "Linfocitos B", "Neutrófilos"], respuesta: 1 },
+  { pregunta: "¿Qué síntoma es característico en la etapa pulmonar?", opciones: ["Disnea con eosinofilia", "Epistaxis", "Sibilancias con eritema", "Vómito con sangre"], respuesta: 0 },
+  { pregunta: "¿Qué técnica permite diferenciar entre N. americanus y A. duodenale?", opciones: ["Serología", "Coprocultivo con tierra", "Hemograma", "Western blot"], respuesta: 1 },
+  { pregunta: "¿Qué manifestación se presenta al ingreso de la larva por la piel?", opciones: ["Vesículas dolorosas", "Dermatitis pruriginosa", "Úlcera necrótica", "Mácula purpúrica"], respuesta: 1 },
+  { pregunta: "¿Qué tipo de suelo favorece la transmisión?", opciones: ["Arcilloso seco", "Limo compactado", "Arenoso con restos vegetales", "Suelo estéril"], respuesta: 2 },
+  { pregunta: "¿Cuál es el tratamiento de elección en campañas masivas?", opciones: ["Pirantel 10 mg/kg/día por 3 días", "Albendazol 400 mg dosis única", "Mebendazol 100 mg por 3 días", "Levamisol cada 15 días"], respuesta: 1 },
+  { pregunta: "¿Qué parásito tiene mayor producción diaria de huevos?", opciones: ["Necator americanus", "Enterobius vermicularis", "Trichuris trichiura", "Ancylostoma duodenale"], respuesta: 3 },
+  { pregunta: "¿Cuál es el tratamiento de soporte esencial para casos anémicos?", opciones: ["Suplementos de calcio", "Antibióticos", "Sales de hierro", "Vitamina A"], respuesta: 2 },
+  { pregunta: "¿Qué fármaco es más eficaz según el documento para uncinarias?", opciones: ["Mebendazol", "Albendazol", "Ivermectina", "Metronidazol"], respuesta: 1 },
+  { pregunta: "¿Qué medicamento tiene eficacia cercana al 80% de curación?", opciones: ["Flubendazol", "Levamisol", "Pamoato de pirantel", "Nitazoxanida"], respuesta: 2 },
+  { pregunta: "¿Qué hallazgo en sangre es típico en uncinariasis avanzada?", opciones: ["Leucocitosis", "Eosinofilia", "Linfopenia", "Pancitopenia"], respuesta: 1 },
+  { pregunta: "¿Qué población se recomienda tratar especialmente en zonas endémicas?", opciones: ["Adultos mayores", "Mujeres lactantes", "Niños y mujeres embarazadas", "Trabajadores industriales"], respuesta: 2 },
+  { pregunta: "¿Qué estructura de la larva permite su penetración?", opciones: ["Espinas dorsales", "Ventosas", "Lancetas anteriores", "Cilios"], respuesta: 2 },
+  { pregunta: "¿Qué se observa en sangre periférica de pacientes parasitados?", opciones: ["Leucopenia", "Normocitosis", "Microcitosis e hipocromía", "Hiperglucemia"], respuesta: 2 },
+  { pregunta: "¿Qué evento histórico impulsó el control de la enfermedad en América?", opciones: ["La guerra del Pacífico", "Epidemia de dengue", "Fundación Rockefeller", "Plan Marshall"], respuesta: 2 },
+  { pregunta: "¿Qué complicación cardiovascular puede producir uncinariasis severa?", opciones: ["Endocarditis", "Hipotensión ortostática", "Cardiomegalia", "Infarto agudo"], respuesta: 2 },
+  { pregunta: "¿Qué tipo de pacientes presentan reinfección más frecuente?", opciones: ["Urbanos con buena nutrición", "Agricultores descalzos en zonas tropicales", "Población escolar urbana", "Turistas ocasionales"], respuesta: 1 },
+  { pregunta: "¿Qué porcentaje de reticulocitos puede aumentar por anemia?", opciones: ["1%", "2%", "5%", "Más del 5%"], respuesta: 3 },
+  { pregunta: "¿Qué signo físico se asocia con desnutrición avanzada por uncinarias?", opciones: ["Convulsiones", "Ictericia", "Anasarca", "Disentería"], respuesta: 2 },
+  { pregunta: "¿Qué cambio en el ECG puede observarse?", opciones: ["Bradicardia", "Prolongación del QT", "Ondas P invertidas", "Taquicardia ventricular"], respuesta: 1 },
+  { pregunta: "¿Qué parásito tiene larvas con un par de lancetas de distinto grosor?", opciones: ["Necator americanus", "Ancylostoma duodenale", "Enterobius vermicularis", "Trichuris trichiura"], respuesta: 1 },
+  { pregunta: "¿Qué se requiere para diferenciar larvas de Strongyloides y uncinarias?", opciones: ["Antígeno específico", "Forma del esófago y cápsula bucal", "Prueba de ELISA", "Cultivo en medio TCBS"], respuesta: 1 },
+  { pregunta: "¿Qué medida de prevención es clave para evitar la infección?", opciones: ["Lavado de manos", "Evitar carne mal cocida", "Uso de zapatos", "Vacunación"], respuesta: 2 },
+  { pregunta: "¿Qué alteraciones hematológicas adicionales puede haber en desnutridos?", opciones: ["Anemia falciforme", "Anemia megaloblástica", "Policitemia", "Trombocitosis"], respuesta: 1 },
+  { pregunta: "¿Qué parásito puede quedar en estado latente en los tejidos?", opciones: ["Strongyloides", "A. duodenale", "N. americanus", "Trichuris"], respuesta: 1 },
+  { pregunta: "¿Cuál de los siguientes NO es un método de diagnóstico para uncinarias?", opciones: ["Kato-Katz", "Cultivo en agar", "Serología específica IgG", "Coprocultivo con tierra"], respuesta: 2 }
+    ];
+    const preguntasTenias = [
+    
+    ];
+    const preguntasFilariasis = [
+    { pregunta: "¿Cuál es el principal agente etiológico de la filariasis linfática?", opciones: ["Loa loa", "Brugia malayi", "Wuchereria bancrofti", "Onchocerca volvulus"], respuesta: 2 },
+  { pregunta: "¿Cuál es el vector de Wuchereria bancrofti más común en zonas urbanas?", opciones: ["Simulium", "Culex", "Tabanus", "Aedes"], respuesta: 1 },
+  { pregunta: "¿Qué diferencia morfológica tienen las microfilarias de B. malayi respecto a W. bancrofti?", opciones: ["No tienen membrana", "Núcleos llegan al extremo posterior", "Presentan ganchos en la cabeza", "Miden más de 500 micras"], respuesta: 1 },
+  { pregunta: "¿Dónde se localizan los adultos de estas filarias?", opciones: ["Tejido muscular", "Sistema linfático", "Intestino delgado", "Pulmones"], respuesta: 1 },
+  { pregunta: "¿Qué característica tienen las hembras de estos parásitos?", opciones: ["Son ovíparas", "Producen huevos con larvas", "Son ovovivíparas", "Solo producen machos"], respuesta: 2 },
+  { pregunta: "¿Qué periodicidad tienen las microfilarias de W. bancrofti?", opciones: ["Diurna", "No periódica", "Nocturna", "Mensual"], respuesta: 2 },
+  { pregunta: "¿Qué forma es infectante para el humano?", opciones: ["Huevo", "Microfilaria", "Larva en 'forma de salchicha'", "Larva filariforme"], respuesta: 3 },
+  { pregunta: "¿Qué etapa clínica se caracteriza por linfangitis, adenopatías e hidrocele?", opciones: ["Aguda", "Crónica", "Elefantiásica", "Subclínica"], respuesta: 0 },
+  { pregunta: "¿Qué órgano es más afectado en hombres durante la fase aguda?", opciones: ["Pulmones", "Corazón", "Genitales", "Ojos"], respuesta: 2 },
+  { pregunta: "¿Qué complicación se presenta en la fase elefanteásica?", opciones: ["Anemia", "Fibrosis y obstrucción linfática", "Urticaria diseminada", "Diarrea severa"], respuesta: 1 },
+  { pregunta: "¿Cuál es el método de diagnóstico más utilizado en fase aguda y crónica?", opciones: ["Examen de heces", "Biopsia de piel", "Gota gruesa de sangre nocturna", "Examen de orina"], respuesta: 2 },
+  { pregunta: "¿Qué coloración se recomienda para estudiar microfilarias en gota gruesa?", opciones: ["Ziehl-Neelsen", "Hematoxilina", "PAS", "Azul de metileno"], respuesta: 1 },
+  { pregunta: "¿Qué prueba diagnóstica permite observar microfilarias vivas fluorescentes?", opciones: ["ELISA", "QBC®", "Tinción de Gram", "Cultivo"], respuesta: 1 },
+  { pregunta: "¿Qué inmunoglobulina se eleva en infecciones activas?", opciones: ["IgM", "IgA", "IgG4", "IgD"], respuesta: 2 },
+  { pregunta: "¿Qué bacteria endosimbionte tiene importancia en la patogenia y tratamiento?", opciones: ["Mycoplasma", "Wolbachia", "Salmonella", "Ehrlichia"], respuesta: 1 },
+  { pregunta: "¿Cuál es el tratamiento clásico más completo para adultos y microfilarias?", opciones: ["Albendazol", "Ivermectina", "Dietilcarbamazina (DEC)", "Doxiciclina"], respuesta: 2 },
+  { pregunta: "¿Qué efecto adverso importante puede causar la dietilcarbamazina?", opciones: ["Hipotermia", "Reacciones alérgicas por destrucción parasitaria", "Hiperglucemia", "Disentería"], respuesta: 1 },
+  { pregunta: "¿Qué combinación de medicamentos recomienda la OMS para control masivo?", opciones: ["Albendazol + cloroquina", "Albendazol + dietilcarbamazina", "Ivermectina + metronidazol", "Albendazol solo"], respuesta: 1 },
+  { pregunta: "¿Qué país representa el 40% de los casos mundiales de filariasis linfática?", opciones: ["Brasil", "India", "Indonesia", "Nigeria"], respuesta: 1 },
+  { pregunta: "¿Qué prueba permite observar filarias vivas en tiempo real en tejidos linfáticos?", opciones: ["Radiografía", "Linfocintigrafía", "Ultrasonido", "Resonancia magnética"], respuesta: 2 },
+  { pregunta: "¿Qué hallazgo en la orina se puede asociar a la enfermedad?", opciones: ["Proteinuria", "Cristales de cistina", "Hemoglobinuria", "Cilindros hialinos"], respuesta: 0 },
+  { pregunta: "¿Qué fase se caracteriza por presentar ascitis y linfedema sin microfilaremia?", opciones: ["Fase inicial", "Fase aguda", "Fase crónica", "Fase de latencia"], respuesta: 2 },
+  { pregunta: "¿Qué síntoma pulmonar puede asociarse a eosinofilia tropical?", opciones: ["Tos productiva", "Disnea nocturna", "Tos seca y estertores", "Silencio respiratorio"], respuesta: 2 },
+  { pregunta: "¿Qué tratamiento actúa contra Wolbachia y esteriliza a las filarias adultas?", opciones: ["Ivermectina", "Albendazol", "Doxiciclina", "Metronidazol"], respuesta: 2 },
+  { pregunta: "¿Qué técnica diagnóstica tiene 100% de sensibilidad para antígenos?", opciones: ["Western blot", "Inmunocromatografía rápida", "Hemaglutinación indirecta", "Tinción de Wright"], respuesta: 1 },
+  { pregunta: "¿Qué se observa en ganglios linfáticos infectados por filarias?", opciones: ["Vasculitis hemorrágica", "Granulomas con microfilarias", "Calcificaciones hepáticas", "Amiloidosis"], respuesta: 1 },
+  { pregunta: "¿Cuál es la complicación más visible en fase elefanteásica?", opciones: ["Aumento del perímetro cefálico", "Deformación de extremidades o genitales", "Proptosis ocular", "Ulceración del colon"], respuesta: 1 },
+  { pregunta: "¿Qué método mejora la detección en pacientes con baja microfilaremia?", opciones: ["Tinción con azul de metileno", "Método de Knott", "Prueba de avidez", "Tinción Gram"], respuesta: 1 },
+  { pregunta: "¿Cuál es la edad en la que se suele adquirir la infección?", opciones: ["Recién nacidos", "Adolescencia", "Infancia", "Adulto mayor"], respuesta: 2 },
+  { pregunta: "¿Qué signo clínico puede observarse en casos de “fiebre por filarias”?", opciones: ["Bradicardia", "Conjuntivitis y urticaria", "Hipertermia aislada sin síntomas", "Exantema purpúrico"], respuesta: 1 }
+    ];
+    const preguntasOnchocerca = [
+  { pregunta: "¿Cuál es el vector de Onchocerca volvulus?", opciones: ["Culex", "Aedes", "Simulium (mosca negra)", "Tabanus"], respuesta: 2 },
+  { pregunta: "¿Qué tipo de hábitat prefieren los vectores de O. volvulus?", opciones: ["Estanques de agua estancada", "Zonas urbanas con basura", "Ríos de corriente rápida", "Zonas secas de montaña"], respuesta: 2 },
+  { pregunta: "¿Qué forma del parásito es inoculado al humano por el vector?", opciones: ["Huevo", "Microfilaria", "Larva L3", "Larva L1"], respuesta: 2 },
+  { pregunta: "¿Dónde se desarrollan los adultos de Onchocerca volvulus?", opciones: ["Tejido linfático", "Cavidad peritoneal", "Nódulos subcutáneos (oncocercomas)", "Alvéolos pulmonares"], respuesta: 2 },
+  { pregunta: "¿Cuál es el principal daño causado por las microfilarias?", opciones: ["Destrucción de vasos linfáticos", "Necrosis hepática", "Lesión ocular y cutánea", "Afectación del sistema nervioso"], respuesta: 2 },
+  { pregunta: "¿Qué estructura ocular puede verse afectada por las microfilarias?", opciones: ["Retina", "Esclerótica", "Córnea", "Cristalino"], respuesta: 2 },
+  { pregunta: "¿Cuál es el signo ocular típico de oncocercosis?", opciones: ["Glaucoma", "Leucoma corneal", "Hemorragia subconjuntival", "Hipema"], respuesta: 1 },
+  { pregunta: "¿Cuál es la manifestación cutánea típica de la infección crónica?", opciones: ["Eritema nodular", "Dermatitis exfoliativa", "Piel de pantera (hipopigmentación)", "Esclerodermia"], respuesta: 2 },
+  { pregunta: "¿Qué hallazgo histológico es característico del oncocercoma?", opciones: ["Quistes con larvas", "Granulomas calcificados", "Adultos enrollados en tejido fibroso", "Células gigantes multinucleadas"], respuesta: 2 },
+  { pregunta: "¿Cuál es el método de diagnóstico más específico para la oncocercosis?", opciones: ["Coproparasitoscópico", "Biopsia de piel (skin snip)", "Gota gruesa", "Serología IgE"], respuesta: 1 },
+  { pregunta: "¿A qué hora se recomienda realizar la biopsia de piel para detectar microfilarias?", opciones: ["Mañana", "Tarde", "Noche", "A cualquier hora"], respuesta: 3 },
+  { pregunta: "¿Qué técnica permite detectar antígenos de O. volvulus en campo?", opciones: ["Western blot", "ELISA", "Prueba de inmunocromatografía rápida", "PCR convencional"], respuesta: 2 },
+  { pregunta: "¿Qué medicamento se usa en tratamiento masivo comunitario para O. volvulus?", opciones: ["Mebendazol", "Ivermectina", "Albendazol", "Dietilcarbamazina"], respuesta: 1 },
+  { pregunta: "¿Cuál es el principal efecto de la ivermectina sobre O. volvulus?", opciones: ["Elimina adultos", "Esteriliza adultos y elimina microfilarias", "Destruye quistes", "Aumenta la eosinofilia"], respuesta: 1 },
+  { pregunta: "¿Cuál es el ciclo de administración de ivermectina en campañas?", opciones: ["Una vez al año por 3 años", "Cada 6 meses por 10-15 años", "Mensual por 6 meses", "Dosis única sin repetición"], respuesta: 1 },
+  { pregunta: "¿Qué hallazgo cutáneo se asocia a la reacción de Mazzotti?", opciones: ["Hematoma", "Ronchas y prurito intenso", "Urticaria vesicular", "Piel seca con escamas"], respuesta: 1 },
+  { pregunta: "¿Qué bacteria endosimbionte se encuentra también en O. volvulus?", opciones: ["Rickettsia", "Wolbachia", "Legionella", "Escherichia coli"], respuesta: 1 },
+  { pregunta: "¿Qué fármaco complementario se ha propuesto para eliminar Wolbachia?", opciones: ["Rifampicina", "Claritromicina", "Doxiciclina", "Tetraciclina tópica"], respuesta: 2 },
+  { pregunta: "¿Qué región del mundo presenta la mayor carga de oncocercosis?", opciones: ["Asia central", "África subsahariana", "América del Sur", "Europa oriental"], respuesta: 1 },
+  { pregunta: "¿Qué nombre recibe el programa de control de la OMS para esta enfermedad?", opciones: ["STOP ONCO", "ONCO-RIV", "APOC (Programa Africano para el Control de la Oncocercosis)", "PANAFIL"], respuesta: 2 }
+];
+
+    let puntaje = 0;
+    let respondidas = 0;
+
+    function actualizarPuntaje() {
+      document.getElementById("puntaje").textContent = `Puntaje: ${puntaje}`;
+    }
+
+    function actualizarProgreso() {
+      respondidas++;
+      const total = preguntasAscariasis.length + preguntasToxoplasmosis.length + preguntasLeishmaniasis.length + preguntasPaludismo.length + preguntasNecator.length + preguntasAncylostoma.length + preguntasTenias.length + preguntasFilariasis.length;+ preguntasOnchocerca.length
+
+      const porcentaje = (respondidas / total) * 100;
+      document.getElementById("progreso").style.width = porcentaje + "%";
+    }
+
+    function bloquearBotones(container) {
+      const botones = container.querySelectorAll("button");
+      botones.forEach(b => b.disabled = true);
+    }
+
+    function cargarPreguntas(preguntas, contenedor) {
+      preguntas.forEach((q, index) => {
+        const div = document.createElement("div");
+        div.className = "question-container";
+
+        const preguntaEl = document.createElement("p");
+        preguntaEl.textContent = `${index + 1}. ${q.pregunta}`;
+        div.appendChild(preguntaEl);
+
+        const opcionesDiv = document.createElement("div");
+        opcionesDiv.className = "button-grid";
+
+        q.opciones.forEach((texto, idx) => {
+          const btn = document.createElement("button");
+          btn.textContent = texto;
+          btn.onclick = () => {
+            if (btn.disabled) return;
+            if (idx === q.respuesta) {
+              btn.classList.add("correct");
+              btn.textContent += " ✅ ¡Correcto!";
+              puntaje++;
+              actualizarPuntaje();
+              bloquearBotones(opcionesDiv);
+              actualizarProgreso();
+            } else {
+              btn.classList.add("incorrect");
+              btn.textContent += " ❌ Intenta de nuevo.";
+              btn.disabled = true;
+            }
+          };
+          opcionesDiv.appendChild(btn);
+        });
+
+        div.appendChild(opcionesDiv);
+        contenedor.appendChild(div);
+      });
+    }
+
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.quiz-section').forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    cargarPreguntas(preguntasAscariasis, document.getElementById("ascariasis"));
+    cargarPreguntas(preguntasToxoplasmosis, document.getElementById("toxoplasmosis"));
+    cargarPreguntas(preguntasLeishmaniasis, document.getElementById("leishmaniasis"));
+    cargarPreguntas(preguntasPaludismo, document.getElementById("paludismo"));
+    cargarPreguntas(preguntasNecator, document.getElementById("necator"));
+    cargarPreguntas(preguntasAncylostoma, document.getElementById("ancylostoma"));
+    cargarPreguntas(preguntasTenias, document.getElementById("tenias"));
+    cargarPreguntas(preguntasFilariasis, document.getElementById("filariasis"));
+    cargarPreguntas(preguntasOnchocerca, document.getElementById("onchocerca"));
+
+    actualizarPuntaje();
+  </script>
+</body>
+</html>
